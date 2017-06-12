@@ -407,4 +407,5 @@ analyse-fallback-blocks=no
 overgeneral-exceptions=Exception
 
 [pre-commit-hook]
+command=pylint
 limit=2.0
