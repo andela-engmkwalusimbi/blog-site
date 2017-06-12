@@ -51,7 +51,7 @@ class Comment(models.Model):
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
 
-    class Meta
+    class Meta:
         ordering = ('created',)
 
     def __str__(self):
