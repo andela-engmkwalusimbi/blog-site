@@ -1,0 +1,41 @@
+version: '2'
+
+services:
+    blogsite:
+        container_name: blog-site
+        image: blogsite:latest
+        build:
+            context: .
+            dockerfile: Dockerfile
+        entrypoint: python manage.py runserver
+        env_file:
+            - ./.env
+        depends_on:
+            - postgres-db
+        # environment:
+        #     - VIRTUAL_HOST=blogsite.maha.com # for nginx in dev
+        ports:
+            - 7000:8000
+        networks:
+            - blog-network
+    postgres-db:
+        image: postgres:alpine
+        container_name: blog-site-db
+        ports:
+            - 5432:5432
+        networks:
+            - blog-network
+    # nginx:
+    #     container_name: bh_nginx
+    #     image: jwilder/nginx-proxy
+    #     volumes:
+    #         - /var/run/docker.sock:/tmp/docker.sock:ro
+    #         - ./dev-certs:/etc/nginx/certs
+    #     ports:
+    #         - 80:80
+    #         - 443:443
+    #     environment:
+    #         - DEFAULT_HOST=maha.com
+networks:
+    blog-network:
+      driver: bridge
